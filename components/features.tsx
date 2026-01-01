@@ -1,5 +1,6 @@
-import { Briefcase, GraduationCap, Lightbulb, MapPin } from "lucide-react"
+import { Briefcase, GraduationCap, Lightbulb, MapPin, Trophy, Award } from "lucide-react"
 import { Card } from "@/components/ui/card"
+import Link from "next/link"
 
 export default function Features() {
   const features = [
@@ -29,6 +30,20 @@ export default function Features() {
       title: "Smart Location Matching",
       description: "Filter by location, remote options, or relocation opportunities that suit your career preferences.",
     },
+    {
+      id: 5,
+      icon: Trophy,
+      title: "Skill Assessments",
+      description: "Take industry-standard assessments and earn certificates that verify your expertise to boost job applications.",
+      link: "/assessments"
+    },
+    {
+      id: 6,
+      icon: Award,
+      title: "Global Leaderboard",
+      description: "Compete with professionals worldwide and showcase your skills on our global ranking system.",
+      link: "/leaderboard"
+    },
   ]
 
   return (
@@ -43,20 +58,34 @@ export default function Features() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature, idx) => {
             const Icon = feature.icon
-            return (
-              <Card
-                key={feature.id}
-                className={`p-8 glassmorphic border-foreground/10 spotlight-card hover-card scale-in`}
-                style={{ animationDelay: `${idx * 100}ms` }}
-              >
+            const CardContent = (
+              <>
                 <div className="inline-flex p-3 bg-foreground/10 rounded-lg mb-4">
                   <Icon className="w-6 h-6 text-foreground" />
                 </div>
                 <h3 className="text-xl font-bold text-foreground mb-2">{feature.title}</h3>
                 <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
+              </>
+            )
+            
+            return (
+              <Card
+                key={feature.id}
+                className={`p-8 glassmorphic border-foreground/10 spotlight-card hover-card scale-in ${
+                  feature.link ? 'cursor-pointer hover:scale-105 transition-transform' : ''
+                }`}
+                style={{ animationDelay: `${idx * 100}ms` }}
+              >
+                {feature.link ? (
+                  <Link href={feature.link} className="block">
+                    {CardContent}
+                  </Link>
+                ) : (
+                  CardContent
+                )}
               </Card>
             )
           })}
