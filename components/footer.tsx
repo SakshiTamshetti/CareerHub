@@ -86,13 +86,13 @@ export default function Footer() {
             © 2025 CareerHub. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
-            <a href="https://github.com/mansi066/CareerHub" className="text-muted-foreground hover:text-foreground transition-colors" aria-label="Twitter">
+            <a href="#" className="text-muted-foreground hover:text-foreground transition-colors" aria-label="Twitter">
               <Twitter className="w-5 h-5" />
             </a>
-            <a href="https://www.linkedin.com/in/mansi-singhal-0a5580296/" className="text-muted-foreground hover:text-foreground transition-colors" aria-label="LinkedIn">
+            <a href="#" className="text-muted-foreground hover:text-foreground transition-colors" aria-label="LinkedIn">
               <Linkedin className="w-5 h-5" />
             </a>
-            <a href="https://github.com/mansi066/CareerHub" className="text-muted-foreground hover:text-foreground transition-colors" aria-label="GitHub">
+            <a href="#" className="text-muted-foreground hover:text-foreground transition-colors" aria-label="GitHub">
               <Github className="w-5 h-5" />
             </a>
           </div>
