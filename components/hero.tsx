@@ -47,29 +47,19 @@ export default function Hero() {
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <Link href="/signup">
-<<<<<<< HEAD
-            <Button size="lg" className="glassmorphic-button-primary w-full sm:w-auto">
-=======
-
-            <Button size="lg" className="glassmorphic-button-primary text-foreground w-full sm:w-auto">
-
             <Button
               size="lg"
-              className="group w-full sm:w-auto transition-all duration-300 hover:scale-[1.03] hover:shadow-lg"
+              className="glassmorphic-button-primary w-full sm:w-auto group transition-all duration-300 hover:scale-[1.03] hover:shadow-lg"
             >
->>>>>>> e5b6980279b9dd1dfd32657aa0adff18599f728f
               Start Your Search
               <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
             </Button>
           </Link>
 
-          <Button size="lg" variant="outline" className="glassmorphic w-full sm:w-auto">
-
-
           <Button
             size="lg"
             variant="outline"
-            className="w-full sm:w-auto bg-transparent flex items-center gap-2 hover:bg-foreground/5 transition-all"
+            className="w-full sm:w-auto glassmorphic flex items-center gap-2 hover:bg-foreground/5 transition-all"
           >
             <Play className="w-4 h-4" />
             Watch Tutorial

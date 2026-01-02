@@ -6,11 +6,16 @@ import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
 import { Badge } from "@/components/ui/badge"
 import { Clock, ChevronLeft, ChevronRight, Flag } from "lucide-react"
-import { questionBank } from "@/lib/question-bank"
+import { questionBank, Question } from "@/lib/question-bank"
+
+interface Assessment {
+  duration: number;
+  passScore: number;
+}
 
 interface QuizInterfaceProps {
   assessmentId: string
-  assessment: any
+  assessment: Assessment
   onComplete: (results: any) => void
 }
 
@@ -18,7 +23,7 @@ export default function QuizInterface({ assessmentId, assessment, onComplete }: 
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [answers, setAnswers] = useState<Record<number, string>>({})
   const [timeLeft, setTimeLeft] = useState(assessment.duration * 60) // Convert to seconds
-  const [questions] = useState(() => questionBank[assessmentId] || [])
+  const [questions] = useState<Question[]>(() => questionBank[assessmentId] || [])
 
   // Timer effect
   useEffect(() => {
@@ -62,7 +67,7 @@ export default function QuizInterface({ assessmentId, assessment, onComplete }: 
   const handleSubmit = () => {
     // Calculate score
     let correctAnswers = 0
-    questions.forEach((question, index) => {
+    questions.forEach((question: Question, index: number) => {
       if (answers[index] === question.correct) {
         correctAnswers++
       }
@@ -96,7 +101,7 @@ export default function QuizInterface({ assessmentId, assessment, onComplete }: 
     )
   }
 
-  const currentQ = questions[currentQuestion]
+  const currentQ: Question = questions[currentQuestion]
 
   return (
     <section className="py-8 px-4 min-h-screen">
@@ -130,7 +135,7 @@ export default function QuizInterface({ assessmentId, assessment, onComplete }: 
           </CardHeader>
           
           <CardContent className="space-y-4">
-            {currentQ.options.map((option, index) => {
+            {currentQ.options.map((option: string, index: number) => {
               const optionKey = String.fromCharCode(65 + index) // A, B, C, D
               const isSelected = answers[currentQuestion] === optionKey
               
@@ -170,7 +175,7 @@ export default function QuizInterface({ assessmentId, assessment, onComplete }: 
             {currentQuestion === questions.length - 1 ? (
               <Button 
                 onClick={handleSubmit}
-                className="glassmorphic-button-primary text-foreground flex items-center gap-2"
+                className="glassmorphic-button-primary flex items-center gap-2"
               >
                 <Flag className="w-4 h-4" />
                 Submit Assessment
@@ -191,7 +196,7 @@ export default function QuizInterface({ assessmentId, assessment, onComplete }: 
         <div className="mt-8 p-4 rounded-lg bg-muted/50">
           <h3 className="text-sm font-semibold mb-3">Question Navigator</h3>
           <div className="grid grid-cols-10 gap-2">
-            {questions.map((_, index) => (
+            {questions.map((_, index: number) => (
               <button
                 key={index}
                 onClick={() => setCurrentQuestion(index)}

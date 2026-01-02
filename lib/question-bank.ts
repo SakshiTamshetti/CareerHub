@@ -1,5 +1,15 @@
 // Question bank for different assessments
-export const questionBank = {
+export interface Question {
+  question: string;
+  options: string[];
+  correct: string;
+}
+
+export interface QuestionBank {
+  [key: string]: Question[];
+}
+
+export const questionBank: QuestionBank = {
   frontend: [
     {
       question: "Which CSS property is used to create a flexbox container?",
