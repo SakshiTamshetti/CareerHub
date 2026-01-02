@@ -24,30 +24,36 @@ export default function Header() {
   }, [pathname])
 
   return (
-    <header className="sticky top-0 z-50 glassmorphic border-b shadow-md">
+    <header className="sticky top-0 z-50 glassmorphic border-b shadow-md backdrop-blur-md">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity duration-300">
-          <div className="w-8 h-8 rounded-lg bg-foreground/20 flex items-center justify-center font-bold text-lg shadow-sm">
+        <Link href="/" className="flex items-center gap-2 group">
+          <div className="w-8 h-8 rounded-lg bg-foreground/20 flex items-center justify-center font-bold text-lg shadow-md hover:shadow-lg transition-shadow duration-300">
             C
           </div>
-          <span className="font-bold text-lg text-foreground hidden sm:inline tracking-wide">CareerHub</span>
+          <span className="font-bold text-lg text-foreground hidden sm:inline tracking-wide group-hover:opacity-90 transition-opacity duration-300">
+            CareerHub
+          </span>
         </Link>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-8">
-          <Link href={getHref("features")} className="text-muted-foreground hover:text-foreground transition-colors duration-300">
-            Browse
-          </Link>
-          <Link href="/assessments" className="text-muted-foreground hover:text-foreground transition-colors duration-300">
-            Assessments
-          </Link>
-          <Link href={getHref("testimonials")} className="text-muted-foreground hover:text-foreground transition-colors duration-300">
-            Success Stories
-          </Link>
-          <Link href={getHref("pricing")} className="text-muted-foreground hover:text-foreground transition-colors duration-300">
-            Plans
-          </Link>
+          {[
+            { name: "Browse", hash: "features" },
+            { name: "Assessments", href: "/assessments" },
+            { name: "Success Stories", hash: "testimonials" },
+            { name: "Plans", hash: "pricing" },
+          ].map((link) => (
+            <Link
+              key={link.name}
+              href={link.href || getHref(link.hash!)}
+              className={`relative text-muted-foreground hover:text-foreground transition-colors duration-300
+                ${pathname.includes(link.href || "") ? "font-semibold text-foreground underline underline-offset-4" : ""}
+                hover:bg-gradient-to-r hover:from-primary/20 hover:to-secondary/20 px-2 py-1 rounded-md`}
+            >
+              {link.name}
+            </Link>
+          ))}
         </div>
 
         {/* Desktop CTA */}
@@ -59,7 +65,7 @@ export default function Header() {
             </Button>
           </Link>
           <Link href="/signup">
-            <Button className="glassmorphic-button-primary text-black shadow-md hover:scale-105 transition-transform duration-300">
+            <Button className="glassmorphic-button-primary text-black shadow-lg hover:scale-105 transition-transform duration-300">
               Sign Up
             </Button>
           </Link>
@@ -67,25 +73,32 @@ export default function Header() {
 
         {/* Mobile Menu Button */}
         <button onClick={() => setIsOpen(!isOpen)} className="md:hidden text-foreground" aria-label="Toggle menu">
-          {isOpen ? <X size={24} /> : <Menu size={24} />}
+          {isOpen ? (
+            <X size={24} className="transition-transform duration-300 group-hover:-rotate-12" />
+          ) : (
+            <Menu size={24} className="transition-transform duration-300 group-hover:rotate-12" />
+          )}
         </button>
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="absolute top-16 left-0 right-0 glassmorphic border-b p-4 md:hidden slide-up shadow-lg">
+          <div className="absolute top-16 left-0 right-0 glassmorphic border-b p-4 md:hidden slide-up rounded-b-xl shadow-lg backdrop-blur-md">
             <div className="flex flex-col gap-4">
-              <Link href={getHref("features")} className="text-foreground hover:text-muted-foreground transition-colors duration-300">
-                Browse
-              </Link>
-              <Link href="/assessments" className="text-foreground hover:text-muted-foreground transition-colors duration-300">
-                Assessments
-              </Link>
-              <Link href={getHref("testimonials")} className="text-foreground hover:text-muted-foreground transition-colors duration-300">
-                Success Stories
-              </Link>
-              <Link href={getHref("pricing")} className="text-foreground hover:text-muted-foreground transition-colors duration-300">
-                Plans
-              </Link>
+              {[
+                { name: "Browse", hash: "features" },
+                { name: "Assessments", href: "/assessments" },
+                { name: "Success Stories", hash: "testimonials" },
+                { name: "Plans", hash: "pricing" },
+              ].map((link) => (
+                <Link
+                  key={link.name}
+                  href={link.href || getHref(link.hash!)}
+                  className="text-foreground hover:text-muted-foreground transition-colors duration-300 transform hover:translate-x-1"
+                  onClick={() => setIsOpen(false)} // close menu on click
+                >
+                  {link.name}
+                </Link>
+              ))}
               <div className="flex gap-2 pt-4">
                 <ThemeToggle />
                 <Link href="/login" className="flex-1">
@@ -94,7 +107,7 @@ export default function Header() {
                   </Button>
                 </Link>
                 <Link href="/signup" className="flex-1">
-                  <Button className="w-full glassmorphic-button-primary text-black shadow-md hover:scale-105 transition-transform duration-300">
+                  <Button className="w-full glassmorphic-button-primary text-black shadow-lg hover:scale-105 transition-transform duration-300">
                     Sign Up
                   </Button>
                 </Link>
